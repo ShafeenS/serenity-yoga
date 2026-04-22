@@ -1,4 +1,6 @@
 // index.js
+import FileStore from "session-file-store";
+const SessionFileStore = FileStore(session);
 import express from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
@@ -37,13 +39,19 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Sessions
+app.set("trust proxy", 1);
+
 app.use(session({
   secret: process.env.SESSION_SECRET || "yoga-secret-key-change-in-prod",
   resave: false,
   saveUninitialized: false,
+  store: new SessionFileStore({
+    path: "./sessions"
+  }),
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
     maxAge: 1000 * 60 * 60 * 24,
   },
 }));
