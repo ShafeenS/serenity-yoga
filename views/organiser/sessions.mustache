@@ -1,0 +1,77 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>Sessions — {{course.title}}</h1>
+      <p>Add, view and delete sessions for this course</p>
+    </div>
+
+    {{#flash}}<div class="alert success">{{flash}}</div>{{/flash}}
+    {{#error}}<div class="alert error">{{error}}</div>{{/error}}
+
+    <div class="section-card mb-2">
+      <div class="section-card-header"><h2>Add New Session</h2></div>
+      <form action="/organiser/courses/{{course.id}}/sessions" method="post">
+        <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:0.75rem;align-items:flex-end">
+          <div class="form-group" style="margin:0">
+            <label>Start date &amp; time</label>
+            <input type="datetime-local" name="startDateTime" required />
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>End date &amp; time</label>
+            <input type="datetime-local" name="endDateTime" required />
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>Capacity</label>
+            <input type="number" name="capacity" min="1" max="200" value="20" required style="width:90px" />
+          </div>
+          <button type="submit" class="btn primary">Add Session</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>Existing Sessions</h2>
+        <span class="muted text-sm">{{sessions.length}} session(s)</span>
+      </div>
+      {{#sessions}}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Start</th><th>End</th><th>Capacity</th><th>Booked</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+      {{/sessions}}
+      {{#sessions}}
+            <tr>
+              <td>{{start}}</td>
+              <td>{{end}}</td>
+              <td>{{capacity}}</td>
+              <td>{{booked}}</td>
+              <td>
+                <div style="display:flex;gap:0.4rem">
+                  <a href="/organiser/courses/{{../course.id}}/sessions/{{id}}/list" class="btn sm">Class List</a>
+                  <form action="/organiser/courses/{{../course.id}}/sessions/{{id}}/delete" method="post" onsubmit="return confirm('Delete this session?')">
+                    <button type="submit" class="btn sm danger">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+      {{/sessions}}
+      {{#sessions}}
+          </tbody>
+        </table>
+      </div>
+      {{/sessions}}
+
+      {{^sessions}}
+      <div class="empty-state"><p>No sessions yet. Add one above.</p></div>
+      {{/sessions}}
+    </div>
+
+    <a href="/organiser/courses" class="btn mt-2">← Back to Courses</a>
+  </div>
+</main>
+{{> footer}}

@@ -1,0 +1,93 @@
+{{> head}}
+{{> header}}
+
+<main>
+  <div class="wrap">
+    <div class="course-detail">
+
+      <div class="course-info">
+        <h1>{{course.title}}</h1>
+        <div class="card-meta" style="margin:0.5rem 0">
+          <span class="badge">{{course.level}}</span>
+          <span class="badge accent">{{course.type}}</span>
+          {{#course.allowDropIn}}<span class="badge muted">Drop-in available</span>{{/course.allowDropIn}}
+        </div>
+        <p class="desc">{{course.description}}</p>
+        <dl class="kv">
+          <dt>Dates</dt>    <dd>{{course.startDate}} – {{course.endDate}}</dd>
+          <dt>Location</dt> <dd>Serenity Yoga Studio, 12 Tranquil Lane, Glasgow</dd>
+          <dt>Price</dt>    <dd>{{course.price}}</dd>
+        </dl>
+
+        {{#user}}
+        <section class="mt-3">
+          <h2>Book the Full Course</h2>
+          <p class="muted text-sm mt-1" style="margin-bottom:1rem">Enrol in all sessions at once.</p>
+          <form action="/courses/{{course.id}}/book" method="post">
+            <button class="btn primary" type="submit">Enrol in Full Course</button>
+          </form>
+        </section>
+        {{/user}}
+        {{^user}}
+        <div class="alert info mt-3">
+          <a href="/auth/login">Log in</a> or <a href="/auth/register">register</a> to book this course.
+        </div>
+        {{/user}}
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-header">
+          <h2>Sessions</h2>
+          <span class="muted text-sm">{{sessionsCount}} session(s)</span>
+        </div>
+
+        {{#hasSessions}}
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Start</th><th>End</th><th>Spaces</th><th>Booked</th><th>Remaining</th>
+                {{#user}}<th></th>{{/user}}
+              </tr>
+            </thead>
+            <tbody>
+              {{#sessions}}
+              <tr>
+                <td>{{start}}</td>
+                <td>{{end}}</td>
+                <td>{{capacity}}</td>
+                <td>{{booked}}</td>
+                <td>{{remaining}}</td>
+                {{#user}}
+                <td>
+                  {{#course.allowDropIn}}
+                  <form action="/sessions/{{id}}/book" method="post">
+                    <button class="btn sm {{#isFull}}danger{{/isFull}}" type="submit" {{#isFull}}disabled{{/isFull}}>
+                      {{#isFull}}Full{{/isFull}}{{^isFull}}Book session{{/isFull}}
+                    </button>
+                  </form>
+                  {{/course.allowDropIn}}
+                  {{^course.allowDropIn}}
+                  <span class="muted text-sm">Enrol above</span>
+                  {{/course.allowDropIn}}
+                </td>
+                {{/user}}
+              </tr>
+              {{/sessions}}
+            </tbody>
+          </table>
+        </div>
+        {{/hasSessions}}
+        {{^hasSessions}}
+        <div class="empty-state"><p>No sessions scheduled yet.</p></div>
+        {{/hasSessions}}
+      </div>
+
+    </div>
+    <div class="mt-2">
+      <a href="/courses" class="btn">← Back to Courses</a>
+    </div>
+  </div>
+</main>
+
+{{> footer}}

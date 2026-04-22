@@ -1,0 +1,26 @@
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">🧘 Serenity Yoga</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/courses">Courses</a>
+      {{#user.isOrganiser}}
+      <a href="/organiser">Dashboard</a>
+      {{/user.isOrganiser}}
+      {{#user.isStudent}}
+      <a href="/my-bookings">My Bookings</a>
+      {{/user.isStudent}}
+    </nav>
+    <div class="header-actions">
+      {{#user}}
+        <span class="user-info">Hi, <strong>{{user.name}}</strong></span>
+        <a href="/auth/logout" class="btn sm">Log out</a>
+      {{/user}}
+      {{^user}}
+        <a href="/auth/login" class="btn sm">Log in</a>
+        <a href="/auth/register" class="btn sm primary">Register</a>
+      {{/user}}
+    </div>
+  </div>
+</header>

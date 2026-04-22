@@ -1,0 +1,57 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="flex-between mb-2">
+      <div class="page-header" style="border:none;margin:0;padding:0">
+        <h1>Manage Courses</h1>
+      </div>
+      <a href="/organiser/courses/new" class="btn primary">+ Add Course</a>
+    </div>
+
+    {{#flash}}<div class="alert success">{{flash}}</div>{{/flash}}
+
+    <div class="section-card">
+      {{#courses}}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Title</th><th>Level</th><th>Type</th><th>Dates</th><th>Sessions</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+      {{/courses}}
+      {{#courses}}
+            <tr>
+              <td><strong>{{title}}</strong></td>
+              <td><span class="badge">{{level}}</span></td>
+              <td><span class="badge accent">{{type}}</span></td>
+              <td class="muted text-sm">{{startDate}} – {{endDate}}</td>
+              <td>{{sessionsCount}}</td>
+              <td>
+                <div style="display:flex;gap:0.4rem">
+                  <a href="/organiser/courses/{{id}}/sessions" class="btn sm">Sessions</a>
+                  <a href="/organiser/courses/{{id}}/edit" class="btn sm">Edit</a>
+                  <form action="/organiser/courses/{{id}}/delete" method="post" onsubmit="return confirm('Delete this course and all its sessions?')">
+                    <button type="submit" class="btn sm danger">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+      {{/courses}}
+      {{#courses}}
+          </tbody>
+        </table>
+      </div>
+      {{/courses}}
+
+      {{^courses}}
+      <div class="empty-state">
+        <p>No courses yet. <a href="/organiser/courses/new">Add one now</a>.</p>
+      </div>
+      {{/courses}}
+    </div>
+
+    <a href="/organiser" class="btn mt-2">← Dashboard</a>
+  </div>
+</main>
+{{> footer}}

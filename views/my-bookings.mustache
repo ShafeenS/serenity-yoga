@@ -1,0 +1,51 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>My Bookings</h1>
+      <p>Your course enrolments and session bookings</p>
+    </div>
+
+    {{#bookings}}
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>Course</th><th>Type</th><th>Status</th><th>Booked</th><th></th></tr>
+        </thead>
+        <tbody>
+    {{/bookings}}
+    {{#bookings}}
+          <tr>
+            <td><a href="/courses/{{courseId}}">{{courseTitle}}</a></td>
+            <td><span class="badge muted">{{type}}</span></td>
+            <td>
+              {{#isConfirmed}}<span class="badge">Confirmed</span>{{/isConfirmed}}
+              {{#isWaitlisted}}<span class="badge accent">Waitlisted</span>{{/isWaitlisted}}
+              {{#isCancelled}}<span class="badge muted">Cancelled</span>{{/isCancelled}}
+            </td>
+            <td class="muted text-sm">{{createdAt}}</td>
+            <td>
+              {{^isCancelled}}
+              <form action="/bookings/{{id}}/cancel" method="post" onsubmit="return confirm('Cancel this booking?')">
+                <button type="submit" class="btn sm danger">Cancel</button>
+              </form>
+              {{/isCancelled}}
+            </td>
+          </tr>
+    {{/bookings}}
+    {{#bookings}}
+        </tbody>
+      </table>
+    </div>
+    {{/bookings}}
+
+    {{^bookings}}
+    <div class="empty-state">
+      <p>You have no bookings yet.</p>
+      <a href="/courses" class="btn primary mt-2">Browse Courses</a>
+    </div>
+    {{/bookings}}
+  </div>
+</main>
+{{> footer}}

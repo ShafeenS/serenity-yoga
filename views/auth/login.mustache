@@ -1,0 +1,29 @@
+{{> head}}
+{{> header}}
+
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to your Serenity Yoga account</p>
+
+    {{#error}}<div class="alert error">{{error}}</div>{{/error}}
+
+    <form action="/auth/login" method="post">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Your password" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn primary" style="width:100%">Sign in</button>
+      </div>
+    </form>
+
+    <p class="switch-link">Don't have an account? <a href="/auth/register">Register here</a></p>
+  </div>
+</div>
+
+{{> footer}}

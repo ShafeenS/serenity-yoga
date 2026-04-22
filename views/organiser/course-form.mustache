@@ -1,0 +1,66 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>{{title}}</h1>
+    </div>
+
+    {{#error}}<div class="alert error">{{error}}</div>{{/error}}
+
+    <div class="form-card">
+      <form action="{{action}}" method="post">
+        <div class="form-group">
+          <label for="title">Course title *</label>
+          <input type="text" id="title" name="title" value="{{course.title}}" required placeholder="e.g. 12-Week Vinyasa Flow" />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="Describe the course...">{{course.description}}</textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group">
+            <label for="level">Level *</label>
+            <select id="level" name="level" required>
+              <option value="">Select level</option>
+              <option value="beginner" {{#course.isLevelBeginner}}selected{{/course.isLevelBeginner}}>Beginner</option>
+              <option value="intermediate" {{#course.isLevelIntermediate}}selected{{/course.isLevelIntermediate}}>Intermediate</option>
+              <option value="advanced" {{#course.isLevelAdvanced}}selected{{/course.isLevelAdvanced}}>Advanced</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="type">Type *</label>
+            <select id="type" name="type" required>
+              <option value="">Select type</option>
+              <option value="WEEKLY_BLOCK" {{#course.isTypeWeekly}}selected{{/course.isTypeWeekly}}>Weekly Block</option>
+              <option value="WEEKEND_WORKSHOP" {{#course.isTypeWeekend}}selected{{/course.isTypeWeekend}}>Weekend Workshop</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group">
+            <label for="startDate">Start date</label>
+            <input type="date" id="startDate" name="startDate" value="{{course.startDate}}" />
+          </div>
+          <div class="form-group">
+            <label for="endDate">End date</label>
+            <input type="date" id="endDate" name="endDate" value="{{course.endDate}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="text" id="price" name="price" value="{{course.price}}" placeholder="e.g. £120 for full course" />
+        </div>
+        <div class="form-group" style="flex-direction:row;align-items:center;gap:0.5rem">
+          <input type="checkbox" id="allowDropIn" name="allowDropIn" {{#course.allowDropIn}}checked{{/course.allowDropIn}} style="width:auto" />
+          <label for="allowDropIn" style="color:var(--ink);font-size:0.9rem">Allow drop-in bookings for individual sessions</label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">{{#isEdit}}Save Changes{{/isEdit}}{{^isEdit}}Create Course{{/isEdit}}</button>
+          <a href="/organiser/courses" class="btn">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+{{> footer}}

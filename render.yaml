@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: serenity-yoga
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PORT
+        value: 3000

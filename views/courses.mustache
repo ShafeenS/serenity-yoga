@@ -1,0 +1,93 @@
+{{> head}}
+{{> header}}
+
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>All Courses</h1>
+      <p>Browse and filter our current and upcoming courses</p>
+    </div>
+
+    {{#flash.error}}<div class="alert error">{{flash.error}}</div>{{/flash.error}}
+
+    <div class="filter-bar">
+      <form method="get" action="/courses">
+        <label>
+          Level
+          <select name="level">
+            <option value="">Any level</option>
+            <option value="beginner" {{#filters.isBeginner}}selected{{/filters.isBeginner}}>Beginner</option>
+            <option value="intermediate" {{#filters.isIntermediate}}selected{{/filters.isIntermediate}}>Intermediate</option>
+            <option value="advanced" {{#filters.isAdvanced}}selected{{/filters.isAdvanced}}>Advanced</option>
+          </select>
+        </label>
+        <label>
+          Type
+          <select name="type">
+            <option value="">Any type</option>
+            <option value="WEEKLY_BLOCK" {{#filters.isWeekly}}selected{{/filters.isWeekly}}>Weekly Block</option>
+            <option value="WEEKEND_WORKSHOP" {{#filters.isWeekend}}selected{{/filters.isWeekend}}>Weekend Workshop</option>
+          </select>
+        </label>
+        <label>
+          Drop-in
+          <select name="dropin">
+            <option value="">Any</option>
+            <option value="yes" {{#filters.isDropinYes}}selected{{/filters.isDropinYes}}>Drop-in allowed</option>
+            <option value="no" {{#filters.isDropinNo}}selected{{/filters.isDropinNo}}>Full course only</option>
+          </select>
+        </label>
+        <label>
+          Search
+          <input type="search" name="q" value="{{filters.q}}" placeholder="Title or description" />
+        </label>
+        <div style="display:flex;gap:0.5rem;align-items:flex-end">
+          <button class="btn primary" type="submit">Apply</button>
+          <a href="/courses" class="btn">Reset</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="cards">
+      {{#courses}}
+      <article class="card">
+        <h3><a href="/courses/{{id}}">{{title}}</a></h3>
+        <div class="card-meta">
+          <span class="badge">{{level}}</span>
+          <span class="badge accent">{{type}}</span>
+          {{#allowDropIn}}<span class="badge muted">Drop-in OK</span>{{/allowDropIn}}
+        </div>
+        <p class="muted text-sm">{{description}}</p>
+        <dl class="kv">
+          <dt>Dates</dt><dd>{{startDate}} – {{endDate}}</dd>
+          <dt>Next session</dt><dd>{{nextSession}}</dd>
+          <dt>Sessions</dt><dd>{{sessionsCount}}</dd>
+        </dl>
+        <div class="card-footer">
+          <a href="/courses/{{id}}" class="btn sm primary">View &amp; Book</a>
+        </div>
+      </article>
+      {{/courses}}
+
+      {{^courses}}
+      <div class="empty-state">
+        <p>🌿 No courses match your filters.</p>
+      </div>
+      {{/courses}}
+    </div>
+
+    {{#pagination.totalPages}}
+    <nav class="pagination">
+      {{#pagination.hasPrev}}
+        <a href="{{pagination.prevLink}}" class="btn sm">← Previous</a>
+      {{/pagination.hasPrev}}
+      <span class="muted">Page {{pagination.page}} of {{pagination.totalPages}}</span>
+      {{#pagination.hasNext}}
+        <a href="{{pagination.nextLink}}" class="btn sm">Next →</a>
+      {{/pagination.hasNext}}
+    </nav>
+    {{/pagination.totalPages}}
+  </div>
+</main>
+
+{{> footer}}

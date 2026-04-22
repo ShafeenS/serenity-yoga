@@ -1,0 +1,47 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>Class List</h1>
+      <p>{{course.title}} — {{session.start}}</p>
+    </div>
+
+    <div class="section-card">
+      <div class="section-card-header">
+        <h2>Participants ({{count}} / {{session.capacity}})</h2>
+        <button onclick="window.print()" class="btn sm">🖨 Print</button>
+      </div>
+
+      {{#participants}}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>#</th><th>Name</th><th>Email</th><th>Status</th><th>Booked at</th></tr>
+          </thead>
+          <tbody>
+      {{/participants}}
+      {{#participants}}
+            <tr>
+              <td class="muted">{{@index}}</td>
+              <td><strong>{{name}}</strong></td>
+              <td>{{email}}</td>
+              <td><span class="badge {{#isConfirmed}}{{/isConfirmed}}">{{status}}</span></td>
+              <td class="muted text-sm">{{bookedAt}}</td>
+            </tr>
+      {{/participants}}
+      {{#participants}}
+          </tbody>
+        </table>
+      </div>
+      {{/participants}}
+
+      {{^participants}}
+      <div class="empty-state"><p>No bookings for this session yet.</p></div>
+      {{/participants}}
+    </div>
+
+    <a href="/organiser/courses/{{course.id}}/sessions" class="btn mt-2">← Back to Sessions</a>
+  </div>
+</main>
+{{> footer}}

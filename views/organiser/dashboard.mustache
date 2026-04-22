@@ -1,0 +1,46 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>Organiser Dashboard</h1>
+      <p>Manage courses, sessions and users</p>
+    </div>
+    <div class="cards" style="grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); margin-bottom:2rem">
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;font-family:'Cormorant Garamond',serif;color:var(--brand)">{{stats.courses}}</div>
+        <p class="muted text-sm">Courses</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;font-family:'Cormorant Garamond',serif;color:var(--brand)">{{stats.sessions}}</div>
+        <p class="muted text-sm">Sessions</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;font-family:'Cormorant Garamond',serif;color:var(--brand)">{{stats.students}}</div>
+        <p class="muted text-sm">Students</p>
+      </div>
+    </div>
+    <div class="dashboard-grid">
+      <nav class="sidebar">
+        <h3>Courses</h3>
+        <a href="/organiser/courses">All Courses</a>
+        <a href="/organiser/courses/new">+ Add Course</a>
+        <h3>People</h3>
+        <a href="/organiser/users">Manage Users</a>
+      </nav>
+      <div>
+        <div class="section-card">
+          <div class="section-card-header">
+            <h2>Quick Actions</h2>
+          </div>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+            <a href="/organiser/courses/new" class="btn primary">+ Add New Course</a>
+            <a href="/organiser/courses" class="btn">View All Courses</a>
+            <a href="/organiser/users" class="btn">Manage Users</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{{> footer}}

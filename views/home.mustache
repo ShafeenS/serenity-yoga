@@ -1,0 +1,52 @@
+{{> head}}
+{{> header}}
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Find Your Flow</h1>
+    <p>Join our yoga &amp; mindfulness studio for courses and workshops designed for every level of experience.</p>
+    <div class="hero-actions">
+      <a href="/courses" class="btn primary">Browse All Courses</a>
+      <a href="/auth/register" class="btn ghost">Join Today</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>Upcoming Courses</h1>
+      <p>Our latest courses and workshops — something for every level</p>
+    </div>
+
+    <div class="cards">
+      {{#courses}}
+      <article class="card">
+        <h3><a href="/courses/{{id}}">{{title}}</a></h3>
+        <div class="card-meta">
+          <span class="badge">{{level}}</span>
+          <span class="badge accent">{{type}}</span>
+          {{#allowDropIn}}<span class="badge muted">Drop-in OK</span>{{/allowDropIn}}
+        </div>
+        <p class="muted text-sm">{{description}}</p>
+        <dl class="kv">
+          <dt>Dates</dt><dd>{{startDate}} – {{endDate}}</dd>
+          <dt>Next session</dt><dd>{{nextSession}}</dd>
+          <dt>Sessions</dt><dd>{{sessionsCount}}</dd>
+        </dl>
+        <div class="card-footer">
+          <a href="/courses/{{id}}" class="btn sm primary">View &amp; Book</a>
+        </div>
+      </article>
+      {{/courses}}
+
+      {{^courses}}
+      <div class="empty-state">
+        <p>🌿 No courses available yet — check back soon!</p>
+      </div>
+      {{/courses}}
+    </div>
+  </div>
+</main>
+
+{{> footer}}

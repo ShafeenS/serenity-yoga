@@ -1,0 +1,73 @@
+{{> head}}
+{{> header}}
+<main>
+  <div class="wrap">
+    <div class="page-header">
+      <h1>Manage Users</h1>
+      <p>View students, add organisers and remove users</p>
+    </div>
+
+    {{#flash}}<div class="alert success">{{flash}}</div>{{/flash}}
+    {{#error}}<div class="alert error">{{error}}</div>{{/error}}
+
+    <div class="section-card mb-2">
+      <div class="section-card-header"><h2>Add New Organiser</h2></div>
+      <form action="/organiser/users/add-organiser" method="post">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.75rem;align-items:flex-end">
+          <div class="form-group" style="margin:0">
+            <label>Full name</label>
+            <input type="text" name="name" required placeholder="Jane Smith" />
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>Email address</label>
+            <input type="email" name="email" required placeholder="jane@yoga.local" />
+          </div>
+          <div class="form-group" style="margin:0">
+            <label>Password</label>
+            <input type="password" name="password" required placeholder="Min 8 characters" />
+          </div>
+          <button type="submit" class="btn primary">Add Organiser</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="section-card">
+      <div class="section-card-header"><h2>All Users</h2></div>
+      {{#users}}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+      {{/users}}
+      {{#users}}
+            <tr>
+              <td><strong>{{name}}</strong></td>
+              <td>{{email}}</td>
+              <td><span class="badge {{#isOrganiser}}accent{{/isOrganiser}}">{{role}}</span></td>
+              <td>
+                {{^isSelf}}
+                <form action="/organiser/users/{{id}}/delete" method="post" onsubmit="return confirm('Remove this user and all their bookings?')">
+                  <button type="submit" class="btn sm danger">Remove</button>
+                </form>
+                {{/isSelf}}
+                {{#isSelf}}<span class="muted text-sm">You</span>{{/isSelf}}
+              </td>
+            </tr>
+      {{/users}}
+      {{#users}}
+          </tbody>
+        </table>
+      </div>
+      {{/users}}
+
+      {{^users}}
+      <div class="empty-state"><p>No users found.</p></div>
+      {{/users}}
+    </div>
+
+    <a href="/organiser" class="btn mt-2">← Dashboard</a>
+  </div>
+</main>
+{{> footer}}
